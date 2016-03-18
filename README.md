@@ -35,7 +35,7 @@
 
 ## P19 pushTestApp-Bridging-Header.h
 
-        # import <NCMB/NCMB.h>
+        #import <NCMB/NCMB.h>
 
 ## P23 AppDelegate.swift
 
@@ -62,7 +62,7 @@
             application.registerForRemoteNotifications()
         }else{
             /** iOS8未満での、DeviceToken要求方法**/
-            let type : UIRemoteNotificationType= [.Alert, .Badge, .Sound]
+            let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
             // 通知のタイプを設定
             UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
         }
@@ -74,7 +74,7 @@
             // DeviceTokenの設定
             installation.setDeviceTokenFromData(deviceToken)
             // 端末情報をデータストアに登録
-            installation.saveInBackgroundWithBlock({(NSErrorerror) in
+            installation.saveInBackgroundWithBlock({(NSError error) in
                 if (error != nil){
                     // 端末情報の登録に失敗した時の処理
                 }else{
