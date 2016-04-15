@@ -53,7 +53,7 @@ end
 ## P22 ターミナル
  
 * Podfileの内容をインストール
-`$ pod install`
+`$ pod install --no-repo-update`
 
 ## P23 AppDelegate.swift
 
