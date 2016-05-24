@@ -55,13 +55,13 @@ end
 * Podfileの内容をインストール
 `$ pod install --no-repo-update`
 
-## P23 AppDelegate.swift
+## P24 AppDelegate.swift
 
 ```swift
 import NCMB
 ```
 
-## P25 AppDelegate.swift
+## P27 AppDelegate.swift
 
 ```swift
 //********** APIキーの設定**********
@@ -71,14 +71,14 @@ let clientkey = "YOUR_NCMB_CLIENTKEY"
 
 ※「YOUR_NCMB_APPLICATIONKEY」と「YOUR_NCMB_CLIENTKEY」は各々のmBaaSダッシュボードからコピペしてください。
 
-## P26 AppDelegate.swift
+## P28 AppDelegate.swift
 
 ```swift
 //********** SDKの初期化**********
 NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
 ```
 
-## P28 AppDelegate.swift
+## P29 AppDelegate.swift
 
 ```swift
 if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
@@ -97,7 +97,7 @@ if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
 }
 ```
 
-## P29 AppDelegate.swift
+## P30 AppDelegate.swift
 
 ```swift
 func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
@@ -115,3 +115,22 @@ func application(application: UIApplication, didRegisterForRemoteNotificationsWi
     })
 }
 ```
+
+# 【番外編】SDKのインポート方法
+ハンズオンセミナー【Swiftアプリにプッシュ通知を組み込もう！-【番外編】SDKのインポート方法-】のコーディング時に使用するコピペ用ページです
+
+## P6 Podfile
+```ruby
+# Uncomment this line to define a global platform for your project
+platform :ios, '8.0'
+# Uncomment this line if you're using Swift
+# use_frameworks!
+
+target 'SwiftPushApp' do
+    pod 'NCMB', :git => 'https://github.com/NIFTYCloud-mbaas/ncmb_ios.git'
+end
+```
+
+## P13 GitHubのリリースページ
+
+https://github.com/NIFTYCloud-mbaas/ncmb_ios/releases
