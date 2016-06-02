@@ -119,7 +119,7 @@ func application(application: UIApplication, didRegisterForRemoteNotificationsWi
 ```
 
 # 【番外編】SDKのインポート方法
-ハンズオンセミナー【Swiftアプリにプッシュ通知を組み込もう！-【番外編】SDKのインポート方法-：http://goo.gl/T7SW3p】のコーディング時に使用するコピペ用ページです
+ハンズオンセミナー【Swiftアプリにプッシュ通知を組み込もう！-【番外編】SDKのインポート方法-：[http://goo.gl/T7SW3p](http://goo.gl/T7SW3p)】のコーディング時に使用するコピペ用ページです
 
 ## P6 Podfile
 ```ruby
