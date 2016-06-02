@@ -2,6 +2,8 @@
 ハンズオンセミナー【Swiftアプリにプッシュ通知を組み込もう！】のコーディング時に使用するコピペ用ページです
 
 * 別に配布の資料のページと一致する部分のコードのみ記載しています。
+ * 事前準備資料：http://goo.gl/ZRj9tB
+ * セミナー資料：http://goo.gl/I2qgmE
 * 詳しい進め方等は資料をご覧ください。
 
 ## P18～P20 ターミナル
@@ -117,7 +119,7 @@ func application(application: UIApplication, didRegisterForRemoteNotificationsWi
 ```
 
 # 【番外編】SDKのインポート方法
-ハンズオンセミナー【Swiftアプリにプッシュ通知を組み込もう！-【番外編】SDKのインポート方法-】のコーディング時に使用するコピペ用ページです
+ハンズオンセミナー【Swiftアプリにプッシュ通知を組み込もう！-【番外編】SDKのインポート方法-：http://goo.gl/T7SW3p】のコーディング時に使用するコピペ用ページです
 
 ## P6 Podfile
 ```ruby
