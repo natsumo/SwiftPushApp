@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //********** SDKの初期化 **********
         NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
         
-        // デバイストークンの要求
+        /// デバイストークンの要求
         if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
             /** iOS8以上 **/
              //通知のタイプを設定したsettingを用意
@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerUserNotificationSettings(setting)
             //DevoceTokenを要求
             application.registerForRemoteNotifications()
-            
         }else{
             /** iOS8未満 **/
             let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
@@ -51,14 +50,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // デバイストークンの設定
         installation.setDeviceTokenFromData(deviceToken)
         // 端末情報をデータストアに登録
-        installation.saveInBackgroundWithBlock({(NSError error) in
+        installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
             if (error != nil){
                 // 端末情報の登録に失敗した時の処理
                 
             }else{
                 // 端末情報の登録に成功した時の処理
+                
             }
-        })
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
