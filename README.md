@@ -235,54 +235,55 @@ import NCMB
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-var window: UIWindow?
-//********** APIキーの設定 **********
-let applicationkey = "YOUR_NCMB_APPLICATIONKEY"
-let clientkey      = "YOUR_NCMB_CLIENTKEY"
+    var window: UIWindow?
+    //********** APIキーの設定 **********
+    let applicationkey = "YOUR_NCMB_APPLICATIONKEY"
+    let clientkey      = "YOUR_NCMB_CLIENTKEY"
 
 
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-// Override point for customization after application launch.
-//********** SDKの初期化 **********
-NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // Override point for customization after application launch.
+        //********** SDKの初期化 **********
+        NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
+        
+        /// デバイストークンの要求
+        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
+            /** iOS8以上 **/
+             //通知のタイプを設定したsettingを用意
+            let type : UIUserNotificationType = [.Alert, .Badge, .Sound]
+            let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
+            //通知のタイプを設定
+            application.registerUserNotificationSettings(setting)
+            //DevoceTokenを要求
+            application.registerForRemoteNotifications()
+        }else{
+            /** iOS8未満 **/
+            let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
+            UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
+        }
 
-/// デバイストークンの要求
-if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
-/** iOS8以上 **/
-//通知のタイプを設定したsettingを用意
-let type : UIUserNotificationType = [.Alert, .Badge, .Sound]
-let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
-//通知のタイプを設定
-application.registerUserNotificationSettings(setting)
-//DevoceTokenを要求
-application.registerForRemoteNotifications()
-}else{
-/** iOS8未満 **/
-let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
-UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
+        return true
+    }
+    
+    // デバイストークンが取得されたら呼び出されるメソッド
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
+        // 端末情報を扱うNCMBInstallationのインスタンスを作成
+        let installation = NCMBInstallation.currentInstallation()
+        // デバイストークンの設定
+        installation.setDeviceTokenFromData(deviceToken)
+        // 端末情報をデータストアに登録
+        installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
+            if (error != nil){
+                // 端末情報の登録に失敗した時の処理
+                
+            }else{
+                // 端末情報の登録に成功した時の処理
+                
+            }
+        }
+    }
 }
-
-
-return true
-}
-
-// デバイストークンが取得されたら呼び出されるメソッド
-func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
-// 端末情報を扱うNCMBInstallationのインスタンスを作成
-let installation = NCMBInstallation.currentInstallation()
-// デバイストークンの設定
-installation.setDeviceTokenFromData(deviceToken)
-// 端末情報をデータストアに登録
-installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-if (error != nil){
-// 端末情報の登録に失敗した時の処理
-
-}else{
-// 端末情報の登録に成功した時の処理
-
-}
-}
-}```
+```
 
 ## 参考
 * ニフティクラウドmobile backend の[ドキュメント（プッシュ通知）](http://mb.cloud.nifty.com/doc/current/push/basic_usage_ios.html)をSwift版に書き換えたドキュメントをご用意していますので、ご活用ください
