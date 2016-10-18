@@ -1,4 +1,5 @@
 # 【iOS Swift】アプリにプッシュ通知を組み込もう！
+_20161018更新_
 
 ![画像1](/readme-img/001.png)
 
@@ -22,7 +23,6 @@
 
 ※上記内容で動作確認をしています
 
-
 ## プッシュ通知の仕組み
 * ニフティクラウドmobile backendのプッシュ通知は、iOSが提供している通知サービスを利用しています
  * iOSの通知サービス　__APNs（Apple Push Notification Service）__
@@ -34,91 +34,11 @@
 
 ## 作業の手順
 ### 0.プッシュ通知機能使うための準備
-* 準備作業が少し複雑です
- * 作り方を誤ると動作しない可能性があります
- * 丁寧に作業していきましょう！
-* 下図の内容を作成していきます
+__[【iOS】プッシュ通知の受信に必要な証明書の作り方(開発用)](https://github.com/natsumo/iOS_Certificate)__
+* 上記のドキュメントをご覧の上、必要な証明書類の作成をお願いします
+ * 証明書の作成には[Apple Developer Program](https://developer.apple.com/account/)の登録（有料）が必要です
 
 ![画像i2](/readme-img/i002.png)
-
-* 作成したファイルはダウンロードし、同じフォルダにまとめておきましょう
-
-* ①CSRファイルを作成します　※初回利用時のみ
- * __注意__：CSRファイルは既に作成したものがあれば、新しく作成しなください！必ず既存のものを使用します。複数作成してしまうとファイル名が同じであるため区別できなくなり失敗につながる恐れがあります。
-* 「キーチェーンアクセス」を開いて、メニューバーの「キーチェーンアクセス」＞「証明書アシスタント」＞をクリックします
-
-![画像i3](/readme-img/i003.png)
-
-* 「鍵ペア情報」を確認して「続ける」をクリックし、「設定結果」が出るので「完了」をクリックします
-* 保存場所を選択して「保存」をクリックします
-
-![画像i4](/readme-img/i004.png)
-
-* ここから[Apple Developer Programのメンバーセンター](https://developer.apple.com/account/)にログインして作業を行います
-
-![画像i5](/readme-img/i005.png)
-
-* ②開発用証明書(.cer)を作成します　※初回利用時のみ
- * __注意__：開発用証明書(.cer)ファイルは既に作成したものがあれば、新しく作成しないでください！必ず既存のものを使用します。複数作成してしまうとファイル名が同じであるため区別できなくなり失敗につながる恐れがあります。
-* 「Certificates」＞「All」＞右上の「＋」をクリックして、「iOS App Development」にチェックをいれます
- 
-![画像i6](/readme-img/i006.png)
-![画像i7](/readme-img/i007.png)
-![画像i8](/readme-img/i008.png)
-
-* ③AppIDを作成します
-* 「Identifiers」＞「App IDs」＞右上の「＋」をクリックします
-
-![画像i9](/readme-img/i009.png)
-![画像i10](/readme-img/i010.png)
-![画像i11](/readme-img/i011.png)
-![画像i12](/readme-img/i012.png)
-
-* ④動作確認で使用する端末の登録をします
- * 既に登録済みの場合、この作業は不要です
-* 「Devices」＞「All」＞右上の「＋」をクリックします
-
-![画像i13](/readme-img/i013.png)
-
-* UDIDは下記のいずれかの方法で調べることができます
-
-![画像i14](/readme-img/i014.png)
-![画像i15](/readme-img/i015.png)
-
-* 先ほどの入力欄に調べたUDIDをコピーして貼り付け、「Continue」をクリックします
-
-![画像i16](/readme-img/i016.png)
-
-* ⑤プロビジョニングプロファイルを作成します
-* 「Provisioning Profiles」＞「All」＞右上の「＋」をクリックします
-
-![画像i17](/readme-img/i017.png)
-![画像i18](/readme-img/i018.png)
-![画像i19](/readme-img/i019.png)
-![画像i20](/readme-img/i020.png)
-
-* ⑥APNs用証明書(.cer)の作成をします
-* 「Certificates」＞「All」＞右上の「＋」をクリックします
-
-![画像i21](/readme-img/i021.png)
-![画像i22](/readme-img/i022.png)
-
-* CSRファイルは①開発用証明書(.cer)作成時と同じものを使用します
-
-![画像i23](/readme-img/i023.png)
-![画像i24](/readme-img/i024.png)
-
-* ⑦APNs用証明書(.p12)を書き出します
-* キーチェーンアクセスを開きます
-* ⑥で作成した「APNs用証明書(.cer)」をダブルクリックしてキーチェーンアクセスを開きます
-* 三角のアイコンをクリックして、開きます
- * 重要：証明書と秘密鍵を別々にする必要があります！ 
-
-![画像i27](/readme-img/i027.png)
-![画像i28](/readme-img/i028.png)
-
-* この後使用する証明書やファイルを確認しておきましょう
- * ②開発用証明書(.cer)・⑤プロビジョニングプロファイル・⑦APNs用証明書(.p12)
 
 ### 1. [ニフティクラウドmobile backend](http://mb.cloud.nifty.com/)の会員登録とログイン→アプリ作成と設定
 * 上記リンクから会員登録（無料）をします。登録ができたらログインをすると下図のように「アプリの新規作成」画面が出るのでアプリを作成します
@@ -136,14 +56,18 @@
 ![画像5](/readme-img/005.png)
 
 ### 2. [GitHub](https://github.com/natsumo/SwiftPushApp.git)からサンプルプロジェクトのダウンロード
-
-* この画面([GitHub](https://github.com/natsumo/SwiftPushApp.git))の![画像10](/readme-img/010.png)ボタンをクリックし、さらに![画像11](/readme-img/011.PNG)ボタンをクリックしてサンプルプロジェクトをMacにダウンロードします
+* 下記リンクをクリックしてプロジェクトをMacにダウンロードします
+ * __[SwiftPushApp](https://github.com/natsumo/SwiftPushApp/archive/master.zip)__
 
 ### 3. Xcodeでアプリを起動
+* ダウンロードしたフォルダを開き、「__SwiftPushApp.xcworkspace__」をダブルクリックしてXcode開きます(白い方です)!
 
-* ダウンロードしたフォルダを開き、![画像09](/readme-img/009.png)をダブルクリックしてXcode開きます　![画像08](/readme-img/008.png)
+![画像09](/readme-img/009.png)
+![画像06](/readme-img/006.png)
 
-![画像6](/readme-img/006.png)
+* 「SwiftPushApp.xcodeproj」（青い方）ではないので注意してください！
+
+![画像08](/readme-img/008.png)
 
 ### 3. APIキーの設定
 
@@ -161,13 +85,13 @@
  * メニューバーの「Xcode」＞「Preferences...」を選択します
  * Accounts画面が開いたら、左下の「＋」をクリックします。
  * Apple IDとPasswordを入力して、「Add」をクリックします
- 
- ![図F2.png](https://qiita-image-store.s3.amazonaws.com/0/112032/bef843be-5581-9e0f-aad2-1c05626d9e5d.png)
+
+ ![画像i29](/readme-img/i029.png)
 
  * 追加されると、下図のようになります。追加した情報があっていればOKです
  * 確認できたら閉じます。
 
- ![図F3.png](https://qiita-image-store.s3.amazonaws.com/0/112032/89d9c25c-d4fa-4e93-a454-507c0575f9a3.png)
+ ![画像i30](/readme-img/i030.png)
 
 * プロジェクトをクリックして、「Build Settings」＞「Code Signing」に②開発用証明書(.cer)と⑤プロビジョニングプロファイルを設定します
 
@@ -245,7 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //********** SDKの初期化 **********
         NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
-        
+
         /// デバイストークンの要求
         if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
             /** iOS8以上 **/
@@ -264,7 +188,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-    
+
     // デバイストークンが取得されたら呼び出されるメソッド
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
         // 端末情報を扱うNCMBInstallationのインスタンスを作成
@@ -275,10 +199,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
             if (error != nil){
                 // 端末情報の登録に失敗した時の処理
-                
+
             }else{
                 // 端末情報の登録に成功した時の処理
-                
+
             }
         }
     }
@@ -286,7 +210,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ```
 
 ## 参考
+* 同じ内容のObjective-C版や、バージョン別サンプルもご用意しています
+ * [Swift(Xcode8,iOS10以上対応)版](https://github.com/natsumo/Swift3PushApp)
+ * [Objective-C(Xcode8,iOS10以上対応)版](https://github.com/natsumo/ObjcPushApp_iOS10)
+ * [Objective-C(Xcode7,iOS10未満対応)版](https://github.com/natsumo/ObjcPushApp)
 * ニフティクラウドmobile backend の[ドキュメント（プッシュ通知）](http://mb.cloud.nifty.com/doc/current/push/basic_usage_ios.html)をSwift版に書き換えたドキュメントをご用意していますので、ご活用ください
  * [Swiftでプッシュ通知を送ろう！](http://qiita.com/natsumo/items/8ffafee05cb7eb69d815)
-* 同じ内容の【Objective-C】版もご用意しています
- * https://github.com/natsumo/ObjcPushApp
