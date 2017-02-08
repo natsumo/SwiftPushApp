@@ -1,5 +1,5 @@
 # 【iOS Swift】アプリにプッシュ通知を組み込もう！
-_20161018更新_
+_20170208更新_
 
 ![画像1](/readme-img/001.png)
 
@@ -34,7 +34,7 @@ _20161018更新_
 
 ## 作業の手順
 ### 0.プッシュ通知機能使うための準備
-__[【iOS】プッシュ通知の受信に必要な証明書の作り方(開発用)](https://github.com/natsumo/iOS_Certificate)__
+__[【iOS】プッシュ通知の受信に必要な証明書の作り方(開発用)](https://github.com/NIFTYCloud-mbaas/iOS_Certificate)__
 * 上記のドキュメントをご覧の上、必要な証明書類の作成をお願いします
  * 証明書の作成には[Apple Developer Program](https://developer.apple.com/account/)の登録（有料）が必要です
 
@@ -55,9 +55,9 @@ __[【iOS】プッシュ通知の受信に必要な証明書の作り方(開発�
 
 ![画像5](/readme-img/005.png)
 
-### 2. [GitHub](https://github.com/natsumo/SwiftPushApp.git)からサンプルプロジェクトのダウンロード
+### 2. [GitHub](https://github.com/NIFTYCloud-mbaas/SwiftPushApp.git)からサンプルプロジェクトのダウンロード
 * 下記リンクをクリックしてプロジェクトをMacにダウンロードします
- * __[SwiftPushApp](https://github.com/natsumo/SwiftPushApp/archive/master.zip)__
+ * __[SwiftPushApp](https://github.com/NIFTYCloud-mbaas/SwiftPushApp/archive/master.zip)__
 
 ### 3. Xcodeでアプリを起動
 * ダウンロードしたフォルダを開き、「__SwiftPushApp.xcworkspace__」をダブルクリックしてXcode開きます(白い方です)!
@@ -211,8 +211,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 ## 参考
 * 同じ内容のObjective-C版や、バージョン別サンプルもご用意しています
- * [Swift(Xcode8,iOS10以上対応)版](https://github.com/natsumo/Swift3PushApp)
- * [Objective-C(Xcode8,iOS10以上対応)版](https://github.com/natsumo/ObjcPushApp_iOS10)
- * [Objective-C(Xcode7,iOS10未満対応)版](https://github.com/natsumo/ObjcPushApp)
+ * [Swift(Xcode8,iOS10以上対応)版](https://github.com/NIFTYCloud-mbaas/Swift3PushApp)
+ * [Objective-C(Xcode8,iOS10以上対応)版](https://github.com/NIFTYCloud-mbaas/ObjcPushApp_iOS10)
+ * [Objective-C(Xcode7,iOS10未満対応)版](https://github.com/NIFTYCloud-mbaas/ObjcPushApp)
 * ニフティクラウドmobile backend の[ドキュメント（プッシュ通知）](http://mb.cloud.nifty.com/doc/current/push/basic_usage_ios.html)をSwift版に書き換えたドキュメントをご用意していますので、ご活用ください
  * [Swiftでプッシュ通知を送ろう！](http://qiita.com/natsumo/items/8ffafee05cb7eb69d815)
