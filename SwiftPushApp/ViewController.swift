@@ -2,8 +2,7 @@
 //  ViewController.swift
 //  SwiftPushApp
 //
-//  Created by Natsumo Ikeda on 2016/06/09.
-//  Copyright 2017 FUJITSU CLOUD TECHNOLOGIES LIMITED All Rights Reserved.
+//  Created by ikeda.natsumo on 2023/01/06.
 //
 
 import UIKit
@@ -12,14 +11,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
 }
 
