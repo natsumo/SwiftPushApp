@@ -129,7 +129,8 @@ SDKの導入はCarthage利用しています。
 
 * ニフクラ mobile backend の[ドキュメント（クイックスタート）](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_swift.html)
 
-#### プッシュ通知機能の実装
+#### プッシュ通知機能の実装と設定
+
 * `AppDelegate.swift`の`didFinishLaunchingWithOptions`メソッドにAPNsに対してデバイストークンの要求するコードを記述し、デバイストークンが取得された後に呼び出される`didRegisterForRemoteNotificationsWithDeviceToken`メソッドを追記をします
 * デバイストークンの要求はiOSのバージョンによってコードが異なります
 
@@ -193,3 +194,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // 以下省略
 }
 ```
+
+* Xcodeでプロジェクトを選択して、「Signing & Capabilities」を開きます
+* 「+Capability」をクリックして、検索欄に「Push Notifications」と入力し追加します
