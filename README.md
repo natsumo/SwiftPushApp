@@ -1,210 +1,201 @@
-# 【iOS Swift】アプリにプッシュ通知を組み込もう！
-_20170208更新_
-
-![画像1](/readme-img/001.png)
+# 【iOS(Swift)】アプリにプッシュ通知を組み込もう！
+_20230126更新_
 
 ## 概要
-* [ニフティクラウドmobile backend](http://mb.cloud.nifty.com/)の『プッシュ通知』機能を実装したサンプルプロジェクトです
-* 簡単な操作ですぐに [ニフティクラウドmobile backend](http://mb.cloud.nifty.com/)の機能を体験いただけます★☆
+* Xcode（Swift）で作成したネイティブアプリにニフクラ mobile backendの『プッシュ通知』機能を実装したサンプルプロジェクトです
 
-## ニフティクラウドmobile backendって何？？
-スマートフォンアプリのバックエンド機能（プッシュ通知・データストア・会員管理・ファイルストア・SNS連携・位置情報検索・スクリプト）が**開発不要**、しかも基本**無料**(注1)で使えるクラウドサービス！
+## ニフクラ mobile backend とは
 
-注1：詳しくは[こちら](http://mb.cloud.nifty.com/price.htm)をご覧ください
+https://mbaas.nifcloud.com/
 
-![画像2](/readme-img/002.png)
+スマートフォンアプリのバックエンド機能（プッシュ通知・データストア・会員管理・ファイルストア・SNS連携・位置情報検索・スクリプト）が**開発不要**、**無料**(注1)から使えるクラウドサービスです。
+
+注1：詳しくは[こちら](https://mbaas.nifcloud.com/price.htm)をご覧ください
 
 ## 動作環境
-* Mac OS X 10.10(Yosemite)
-* Xcode ver. 7.2.1
-* iPhone6 ver. 8.2
- * このサンプルアプリは、実機ビルドが必要です
-* Lightningケーブル
 
-※上記内容で動作確認をしています
+プロジェクトに組み込んでいるニフクラ mobile backendのSDKのバージョンはドキュメント更新時点で最新の __v1.3.1__ です。このバージョンでの動作環境は下記です。
 
-## プッシュ通知の仕組み
-* ニフティクラウドmobile backendのプッシュ通知は、iOSが提供している通知サービスを利用しています
- * iOSの通知サービス　__APNs（Apple Push Notification Service）__
+* Swift version 4.2, 5.x
+* iOS 13.x ～ iOS 16.x
+* Xcode 13.2.1 〜 Xcode 14.x
+* armv7k, arm64, arm64e アーキテクチャ
 
- ![画像1](/readme-img/001.png)
+SDKのバージョンアップを行う場合は[こちら（参考：SDKのアップデートについて）](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_swift.html#Carthage%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95)を参考に更新をお願いします。また、最新のSDKバージョン及び動作環境については[mobile backend Swift SDK | GitHub](https://github.com/NIFCLOUD-mbaas/ncmb_swift)をご参照ください。
+プロジェクト作成時に動作検証を行った端末情報も併せて記載しておきます。
 
-* 上図のように、アプリ（Xcode）・サーバー（ニフティクラウドmobile backend）・通知サービス（APNs）の間でやり取りを行うため、認証が必要になります
- * 認証に必要な鍵や証明書の作成は作業手順の「0.プッシュ通知機能を使うための準備」で行います
+* macOS Monterey 12.6.1
+* Xcode 14.0.1
+* iOS 15.7 (iPhone 11 Pro)
 
-## 作業の手順
+※プッシュ通知の動作検証には実機ビルドが必須です
+
+## サンプルプロジェクトの使い方・作業手順
 ### 0.プッシュ通知機能を使うための準備
-__[【iOS】プッシュ通知の受信に必要な証明書の作り方(開発用)](https://github.com/NIFTYCloud-mbaas/iOS_Certificate)__
-* 上記のドキュメントをご覧の上、必要な証明書類の作成をお願いします
- * 証明書の作成には[Apple Developer Program](https://developer.apple.com/account/)の登録（有料）が必要です
 
-![画像i2](/readme-img/i002.png)
+* ニフクラ mobile backendのプッシュ通知は、iOSが提供している通知サービス（APNs（Apple Push Notification Service））を利用しています
+* APNsを利用するには証明書を利用した認証が必要です
+* 下記のドキュメントをご覧の上、認証に必要な証明書類の作成をします
+  * [プッシュ通知に必要な証明書の作り方 | Qiita](https://qiita.com/natsumo/items/d5cc1d0be427ca3af1cb)
+  * なお証明書の作成には[Apple Developer Program](https://developer.apple.com/account/)の登録（有料）が必要です
 
-### 1. [ニフティクラウドmobile backend](http://mb.cloud.nifty.com/)の会員登録とログイン→アプリ作成と設定
-* 上記リンクから会員登録（無料）をします。登録ができたらログインをすると下図のように「アプリの新規作成」画面が出るのでアプリを作成します
+### 1. ニフクラ mobile backendの会員登録（無料）とログイン及びアプリ作成
+* 下記リンクからニフクラ mobile backendの会員登録（無料：SNS ID）、ログインをします
+  * https://console.mbaas.nifcloud.com/signup
+* 「アプリの新規作成」画面（既にアプリを作成済みの場合は「+新しいアプリ」をクリックする）でアプリ名（例：SwiftPushApp）を入力しアプリを作成します
+* アプリが作成されるとAPIキー（２種類）が発行されます
+* APIキー（アプリケーションキーとクライアントキー）はこの後、「3. APIキーの設定」でXcodeにインポートするサンプルアプリ上で使用します
+* 「OK」をクリックするとダッシュボードが表示されます
+* 右上の「アプリ設定」をクリックし、「プッシュ通知」を開きます
+* 「プッシュ通知」＞「プッシュ通知の許可」で「許可する」を選択し、「保存する」をクリックします
+* 「iOSプッシュ通知(p12)」＞「証明書（p12）」の「証明書の選択」ボタンをクリックして「0.プッシュ通知機能を使うための準備」で作成した「⑦APNs用証明書(.p12)」を選択、「アップロード」ボタンをクリックして設定します
+  * 「証明書は設定されています。」と表示されればOKです
 
-![画像3](/readme-img/003.png)
+### 2. サンプルプロジェクトのダウンロード
+* 下記リンクをクリックしてプロジェクトをダウンロードします
+  * https://github.com/NIFCLOUD-mbaas/SwiftPushApp/archive/master.zip
 
-* アプリ作成されると下図のような画面になります
-* この２種類のAPIキー（アプリケーションキーとクライアントキー）はXcodeで作成するiOSアプリに[ニフティクラウドmobile backend](http://mb.cloud.nifty.com/)を紐付けるために使用します
+### 3. Xcodeでプロジェクトを起動
 
-![画像4](/readme-img/004.png)
+* ダウンロードしたフォルダを開き、「__SwiftPushApp.xcodeproj__」をダブルクリックしてXcodeでプロジェクトを起動します
 
-* 続けてプッシュ通知の設定を行います
-* ここで⑦APNs用証明書(.p12)の設定も行います
+### 4. APIキーの設定
 
-![画像5](/readme-img/005.png)
-
-### 2. [GitHub](https://github.com/NIFTYCloud-mbaas/SwiftPushApp.git)からサンプルプロジェクトのダウンロード
-* 下記リンクをクリックしてプロジェクトをMacにダウンロードします
- * __[SwiftPushApp](https://github.com/NIFTYCloud-mbaas/SwiftPushApp/archive/master.zip)__
-
-### 3. Xcodeでアプリを起動
-* ダウンロードしたフォルダを開き、「__SwiftPushApp.xcworkspace__」をダブルクリックしてXcode開きます(白い方です)!
-
-![画像09](/readme-img/009.png)
-![画像06](/readme-img/006.png)
-
-* 「SwiftPushApp.xcodeproj」（青い方）ではないので注意してください！
-
-![画像08](/readme-img/008.png)
-
-### 3. APIキーの設定
-
-* `AppDelegate.swift`を編集します
-* 先程[ニフティクラウドmobile backend](http://mb.cloud.nifty.com/)のダッシュボード上で確認したAPIキーを貼り付けます
-
-![画像07](/readme-img/007.png)
-
-* それぞれ`YOUR_NCMB_APPLICATION_KEY`と`YOUR_NCMB_CLIENT_KEY`の部分を書き換えます
- * このとき、ダブルクォーテーション（`"`）を消さないように注意してください！
+* SwiftPushApp フォルダ配下の `AppDelegate.swift`を編集します
+* 先程ニフクラ mobile backendのダッシュボード上で確認したAPIキー、それぞれ`YOUR_APPLICATION_KEY`と`YOUR_CLIENT_KEY`の部分に貼り、書き換えます
+  * APIキーは、ニフクラ mobile backend管理画面、右上の「アプリ設定」から確認できます
+  * １つずつコピーボタンでコピーして貼り付けてください
+  * このとき、ダブルクォーテーション（`"`）を消さないように注意してください
 * 書き換え終わったら`command + s`キーで保存をします
 
-### 4. 実機ビルド
-* 始めて実機ビルドをする場合は、Xcodeにアカウント（AppleID）の登録をします
- * メニューバーの「Xcode」＞「Preferences...」を選択します
- * Accounts画面が開いたら、左下の「＋」をクリックします。
- * Apple IDとPasswordを入力して、「Add」をクリックします
+### 5. 実機ビルド
+始めて実機ビルドをする場合は、Xcodeにアカウント（Apple ID）の登録をします。
 
- ![画像i29](/readme-img/i029.png)
+* メニューバーの「Xcode」＞「Preferences...」＞「Accounts」を選択します
+* 左下の「＋」＞「Apple ID」をクリックします
+* 「Apple ID」を入力して「Next」、「Password」を入力して「Next」をクリックすると追加されます
+  * 認証のためコードを要求された場合は従ってください
+* 追加されたらこの画面は閉じます
 
- * 追加されると、下図のようになります。追加した情報があっていればOKです
- * 確認できたら閉じます。
+ビルドに必要な設定をしていきます。
 
- ![画像i30](/readme-img/i030.png)
+* プロジェクトを選択して、「Signing & Capabilities」を開きます
+* 「0.プッシュ通知機能を使うための準備」で作成した「②開発用ビルド証明書(.cer)」と「⑤プロビジョニングプロファイル」を設定します
+  * あらかじめ「②開発用ビルド証明書(.cer)」と「⑤プロビジョニングプロファイル」はダブルクリックをし、キーチェーンアクセスと紐づけておきましょう
+* 「Team」で「Apple ID」を選択し、「Bundle IdentiIdentier」に「0.プッシュ通知機能を使うための準備」で作成した「③AppID」を記入します
+* 無事連携されれば「Provisioning Profile」、「Signing Certificate」が表示されます
 
-* プロジェクトをクリックして、「Build Settings」＞「Code Signing」に②開発用証明書(.cer)と⑤プロビジョニングプロファイルを設定します
+![画像i01](/readme-img/i01.png)
 
-![画像i25](/readme-img/i025.png)
+実機にビルドします。
 
-* 「Code Signing Identity」に②開発用証明書(.cer)を設定しますが、「Provisioning Profile」に作成した⑤プロビジョニングプロファイルを設定すれば、「Code Signing Identity」の部分は「Automatic」で構いません
- * __注意__：作成した⑤プロビジョニングプロファイルは一度ダブルクリックをしておかないと、「Provisioning Profile」に設定できません。
-* Bundle ID を設定します
-* 「General」＞「Identity」の「Bundle Identifier」に③AppID を作成したときに入力したBundle IDに書き換えてください
+* 「0.プッシュ通知機能を使うための準備」の「④端末の登録」で登録した、動作確認用iPhoneをMacにつなぎます
+  * iOS16以上でテストアプリをビルドする場合、iPhone（端末側）の設定で「デベロッパモード」を有効にする必要があります
+  * 「設定」＞「プライバシーとセキュリティ」＞「デベロッパモード」をONにしてから実行してください
+* 接続したiPhoneを選び、実行ボタン（さんかくの再生マーク）をクリックします
+  * iOSのバージョンが一致せずビルドエラーとなる場合は、「General」＞「Minimum Deployments」で対象OSを変更してください
 
-![画像i26](/readme-img/i026.png)
+![画像i02](/readme-img/i02.png)
 
-* 設定は完了です
-* lightningケーブルで④端末の登録で登録した、動作確認用iPhoneをMacにつなぎます
- * 実機ビルドが初めての場合は[こちら](http://qiita.com/natsumo/items/3f1dd0e7f5471bd4b7d9)をご覧いただき、実機ビルドの準備をお願いします
-* Xcode画面で左上で、接続したiPhoneを選び、実行ボタン（さんかくの再生マーク）をクリックします
-* __ビルド時にエラーが発生した場合の対処方法__
- * Xcodeのバージョンが古い場合`import NCMB`にエラーが発生し、上手くSDKが読み込めないことがあります
- * その場合は[【Swift】SDKの読み込みにuse framework!が使えない場合の対処方法](http://goo.gl/Z1D0K3)をご覧いただき、別の読み込み方法をお試しください
+### 6.動作確認
+* ビルドされたアプリは自動で起動します
+* プッシュ通知の許可を求めるアラートが出るので、必ず許可します
+  * 許可しないとプッシュ通知が届きません
+* この時点でデバイストークンがAPNsから取得され、ニフクラ mobile backendに保存されます
+  * 正しく保存されると、Xcode側にログ（`保存に成功しました`）が出力されます
+* ニフクラ mobile backendの管理画面から「データストア」＞「installation」クラスを確認してみましょう
 
-### 5.動作確認
-* インストールしたアプリを起動します
- * プッシュ通知の許可を求めるアラートが出たら、必ず許可してください！
-* 起動されたらこの時点でデバイストークンが取得されます
-* [ニフティクラウドmobile backend](http://mb.cloud.nifty.com/)のダッシュボードで「データストア」＞「installation」クラスを確認してみましょう！
+![画像i03](/readme-img/i03.png)
 
-![画像12](/readme-img/012.png)
+* 端末側で起動したアプリは一度閉じて（完全に終了して）おきます
 
-* 端末側で起動したアプリは一度閉じておきます
+### 7.プッシュ通知を送りましょう
 
-### 6.__プッシュ通知を送りましょう！__
-* いよいよです！実際にプッシュ通知を送ってみましょう！
-* [ニフティクラウドmobile backend](http://mb.cloud.nifty.com/)のダッシュボードで「プッシュ通知」＞「＋新しいプッシュ通知」をクリックします
+実際にプッシュ通知を送ってみましょう
+
+* ニフクラ mobile backend のダッシュボードで「プッシュ通知」＞「＋新しいプッシュ通知」をクリックします
 * プッシュ通知のフォームが開かれます
 * 必要な項目を入力してプッシュ通知を作成します
 
-![画像13](/readme-img/013.png)
+![画像i04](/readme-img/i04.png)
 
-* 端末を確認しましょう！
-* 少し待つとプッシュ通知が届きます！！！
+* 端末を確認しましょう
+* 少し待つとプッシュ通知が届きます
 
 ## 解説
-サンプルプロジェクトに実装済みの内容のご紹介
+サンプルプロジェクトに実装済みの内容のご紹介します。
 
 #### SDKのインポートと初期設定
-* ニフティクラウドmobile backend の[ドキュメント（クイックスタート）](http://mb.cloud.nifty.com/doc/current/introduction/quickstart_ios.html)をSwift版に書き換えたドキュメントをご用意していますので、ご活用ください
- * [SwiftでmBaaSを始めよう！(＜CocoaPods＞でuse_framewoks!を有効にした方法)](http://qiita.com/natsumo/items/57d3a4d9be16b0490965)
 
-#### ロジック
- * `AppDelegate.swift`の`didFinishLaunchingWithOptions`メソッドにAPNsに対してデバイストークンの要求するコードを記述し、デバイストークンが取得された後に呼び出される`didRegisterForRemoteNotificationsWithDeviceToken`メソッドを追記をします
- * デバイストークンの要求はiOSのバージョンによってコードが異なります
+SDKの導入はCarthage利用しています。
+
+* ニフクラ mobile backend の[ドキュメント（クイックスタート）](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_swift.html)
+
+#### プッシュ通知機能の実装と設定
+
+* `AppDelegate.swift`の`didFinishLaunchingWithOptions`メソッドにAPNsに対してデバイストークンの要求するコードを記述し、デバイストークンが取得された後に呼び出される`didRegisterForRemoteNotificationsWithDeviceToken`メソッドを追記をします
+* デバイストークンの要求はiOSのバージョンによってコードが異なります
 
 ```swift
+//
+//  AppDelegate.swift
+//  SwiftPushApp
+//
+//  Created by ikeda.natsumo on 2023/01/06.
+//
+
 import UIKit
 import NCMB
+import UserNotifications
 
-@UIApplicationMain
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-    //********** APIキーの設定 **********
-    let applicationkey = "YOUR_NCMB_APPLICATIONKEY"
-    let clientkey      = "YOUR_NCMB_CLIENTKEY"
-
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        //********** SDKの初期化 **********
-        NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
-
-        /// デバイストークンの要求
-        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
-            /** iOS8以上 **/
-             //通知のタイプを設定したsettingを用意
-            let type : UIUserNotificationType = [.Alert, .Badge, .Sound]
-            let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
-            //通知のタイプを設定
-            application.registerUserNotificationSettings(setting)
-            //DevoceTokenを要求
-            application.registerForRemoteNotifications()
-        }else{
-            /** iOS8未満 **/
-            let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
-        }
-
-        return true
-    }
-
-    // デバイストークンが取得されたら呼び出されるメソッド
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
-        // 端末情報を扱うNCMBInstallationのインスタンスを作成
-        let installation = NCMBInstallation.currentInstallation()
-        // デバイストークンの設定
-        installation.setDeviceTokenFromData(deviceToken)
-        // 端末情報をデータストアに登録
-        installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-            if (error != nil){
-                // 端末情報の登録に失敗した時の処理
-
-            }else{
-                // 端末情報の登録に成功した時の処理
-
+        
+        // APIキーの設定とSDK初期化
+        NCMB.initialize(applicationKey: "YOUR_APPLICATION_KEY", clientKey: "YOUR_CLIENT_KEY")
+        
+        // APNsにデバイストークンを要求
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+            if((error) != nil) {
+                return
+            }
+            if granted {
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
             }
         }
+        
+        return true
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        //端末情報を扱うNCMBInstallationのインスタンスを作成
+        let installation : NCMBInstallation = NCMBInstallation.currentInstallation
+
+        //Device Tokenを設定
+        installation.setDeviceTokenFromData(data: deviceToken)
+
+        //端末情報をデータストアに登録
+        installation.saveInBackground(callback: { result in
+            switch result {
+            case .success:
+                //端末情報の登録が成功した場合の処理
+                print("保存に成功しました")
+            case let .failure(error):
+                //端末情報の登録が失敗した場合の処理
+                print("保存に失敗しました: \(error)")
+                return;
+            }
+        })
+    }
+
+// 以下省略
 }
 ```
 
-## 参考
-* 同じ内容のObjective-C版や、バージョン別サンプルもご用意しています
- * [Swift(Xcode8,iOS10以上対応)版](https://github.com/NIFTYCloud-mbaas/Swift3PushApp)
- * [Objective-C(Xcode8,iOS10以上対応)版](https://github.com/NIFTYCloud-mbaas/ObjcPushApp_iOS10)
- * [Objective-C(Xcode7,iOS10未満対応)版](https://github.com/NIFTYCloud-mbaas/ObjcPushApp)
-* ニフティクラウドmobile backend の[ドキュメント（プッシュ通知）](http://mb.cloud.nifty.com/doc/current/push/basic_usage_ios.html)をSwift版に書き換えたドキュメントをご用意していますので、ご活用ください
- * [Swiftでプッシュ通知を送ろう！](http://qiita.com/natsumo/items/8ffafee05cb7eb69d815)
+* Xcodeでプロジェクトを選択して、「Signing & Capabilities」を開きます
+* 「+Capability」をクリックして、検索欄に「Push Notifications」と入力し追加します
